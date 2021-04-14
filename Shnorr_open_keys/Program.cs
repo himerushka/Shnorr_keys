@@ -156,16 +156,18 @@ namespace Shnorr_open_keys
             Console.WriteLine($"Закрытый (пароль) = {w}");
             Console.WriteLine("-------------------------------------------------------------");
 
-            //аутентификация
+            //аутентификация:
             //проверка работоспособности ключей
             Random rnd = new Random();
             int r = rnd.Next(0, q);
             BigInteger x=0;
             x = BigInteger.ModPow(g, r, p);
-            BigInteger e = rnd.Next(0,Convert.ToInt32(Math.Pow(2, 20) - 1)); //2^t-1    t=20
+            Console.WriteLine($"x={x}");
+            int e = rnd.Next(0,Convert.ToInt32(Math.Pow(2, 20) - 1)); //2^t-1    t=20
             int s = Convert.ToInt32((r + w * e) % q); //не конвертируетсяЫ
             BigInteger xx = 0;
             xx = (BigInteger.Pow(g, s) * BigInteger.Pow(y, Convert.ToInt32(e))) % p;
+            Console.WriteLine($"xx={xx}");
             if (x == xx)
             {
                 Console.WriteLine("True");

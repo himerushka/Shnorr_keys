@@ -176,7 +176,7 @@ namespace Shnorr_open_keys
             {
                 Console.WriteLine("False");
             }
-            //
+            //ожидание нажатия любой клавиши
             Console.ReadKey();
         }
     }

@@ -55,7 +55,7 @@ namespace Shnorr_open_keys
             //g = BigInteger.ModPow(140,q,p);
             //g = Math.Pow(141.0, Convert.ToDouble(q));// % p;
             //Console.WriteLine(g);
-            for (int i = 20000; i < 25000; i++)
+            for (int i = 10; i < 200; i++)
             {
                 g = BigInteger.ModPow(i, q, p);
                 if (g == 1)
@@ -94,7 +94,7 @@ namespace Shnorr_open_keys
             do {
                 try
                 {
-                    Console.WriteLine("Введите закрытый ключ w такой, чтобы 0<w<q");
+                    Console.WriteLine($"Введите закрытый ключ w такой, чтобы 0<w<q={q}");
                     Console.Write("W: ");
                     w = Convert.ToInt32(Console.ReadLine());
                     if (w<=0 || w>=q)
@@ -131,14 +131,16 @@ namespace Shnorr_open_keys
                 Console.WriteLine("Выберите Yj");
                 Console.Write("j:");
                 j = Convert.ToInt32(Console.ReadLine());
-                if (j > 0 && j < 50)
+                if (j >= 0 && j < 150) //откуда ограничение (0;50)??
                 {
                     y = mass[j];
                     Console.WriteLine($"y={y}");
                 }
                 else
                 {
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Неверный индекс. Повторите попытку ввода.");
+                    Console.ResetColor();
                     Console.WriteLine();
                     y = 0;
                 }
@@ -146,14 +148,33 @@ namespace Shnorr_open_keys
             while (y == 0);
             Console.WriteLine();
             Console.WriteLine("-------------------------------------------------------------");
-            Console.WriteLine("Полученные ключи:");
-            Console.WriteLine($"Открытые p={p}     q={q}   g={g}   y={y}");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Получены ключи");
+            Console.ResetColor();
+            Console.WriteLine("-------------------------------------------------------------");
+            Console.WriteLine($"Открытые:   p={p}     q={q}   g={g}   y={y}");
             Console.WriteLine($"Закрытый (пароль) = {w}");
             Console.WriteLine("-------------------------------------------------------------");
 
             //аутентификация
             //проверка работоспособности ключей
-
+            Random rnd = new Random();
+            int r = rnd.Next(0, q);
+            BigInteger x=0;
+            x = BigInteger.ModPow(g, r, p);
+            BigInteger e = rnd.Next(0,Convert.ToInt32(Math.Pow(2, 20) - 1)); //2^t-1    t=20
+            int s = Convert.ToInt32((r + w * e) % q); //не конвертируетсяЫ
+            BigInteger xx = 0;
+            xx = (BigInteger.Pow(g, s) * BigInteger.Pow(y, Convert.ToInt32(e))) % p;
+            if (x == xx)
+            {
+                Console.WriteLine("True");
+            }
+            else
+            {
+                Console.WriteLine("False");
+            }
+            //
             Console.ReadKey();
         }
     }

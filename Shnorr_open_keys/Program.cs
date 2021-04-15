@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-//using System;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,15 +9,43 @@ namespace Shnorr_open_keys
 {
     class Program
     {
+        static bool IsPrime(int n) //проверка числа на простоту
+        {
+            if (n<1) { return false; } //если меньше 1, то не подходит
+            for(int i=2;i<n;i++)
+            {
+                if (n%i==0) { return false; } //есди делится без остатка, то не простое
+            }
+            return true;
+        }
+
         static void Main(string[] args)
         {
-            //int  q, g, y;
-            Console.Write("Введите простое число р: ");
-            int p=Convert.ToInt32(Console.ReadLine());
-            //Console.WriteLine($"Число p={p}");
-            int[] mass = new int[1000];
+            int p = 0;
+            Console.WriteLine("-------------------------------------------------------------");
+            do
+            {
+                Console.WriteLine("Введите простое число р в диапазоне (10 000; 100 000)");
+                Console.Write("p: ");
+                p = Convert.ToInt32(Console.ReadLine());    //вводим число р
+                if (p < 10000 || p > 100000)    //проверка диапазона
+                {
+                    p = 0;
+                    Console.WriteLine("Неверный диапазон числа. Повторите попытку ввода.");
+                    Console.WriteLine();
+                }
+                if (!IsPrime(p))    //проверка на простоту
+                {
+                    p = 0;
+                    Console.WriteLine("Число не является простым. Повторите попытку ввода.");
+                    Console.WriteLine();
+                }
+            }
+            while (p == 0);
+            
+            int[] mass = new int[1000]; //массив для генерируемых чисел
             int j = 0;
-            for (int i=50; i < 10000; i++)
+            for (int i=100; i < 10000; i++)  //подбор числа q
             {
                 if (((p - 1) % i) ==0) {
                     mass[j] = i;
@@ -33,7 +60,7 @@ namespace Shnorr_open_keys
                 Console.WriteLine("Выберите Qj");
                 Console.Write("j:");
                 q = Convert.ToInt32(Console.ReadLine());
-                if (q > 0 && q < 1000)
+                if (q > 0 && q < 1000)  //проверка введенного числа по диапазону массива
                 {
                     q = mass[q];
                     Console.WriteLine($"q={q}");
@@ -52,10 +79,7 @@ namespace Shnorr_open_keys
 
             BigInteger g;
             j = 0;
-            //g = BigInteger.ModPow(140,q,p);
-            //g = Math.Pow(141.0, Convert.ToDouble(q));// % p;
-            //Console.WriteLine(g);
-            for (int i = 10; i < 200; i++)
+            for (int i = 15000; i < 25000; i++)     //поиск g
             {
                 g = BigInteger.ModPow(i, q, p);
                 if (g == 1)
@@ -73,7 +97,7 @@ namespace Shnorr_open_keys
                 Console.WriteLine("Выберите Gj");
                 Console.Write("j:");
                 j = Convert.ToInt32(Console.ReadLine());
-                if (j > 0 && j < 500)
+                if (j > 0 && j < 1000)
                 {
                     g = mass[j];
                     Console.WriteLine($"g={g}");

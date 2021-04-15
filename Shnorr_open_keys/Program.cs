@@ -18,7 +18,8 @@ namespace Shnorr_open_keys
             }
             return true;
         }
-
+        //ввести размерность для массива
+        //уточнить диапазоны отсчета для циклов поиска
         static void Main(string[] args)
         {
             int p = 0;
@@ -42,7 +43,7 @@ namespace Shnorr_open_keys
                 }
             }
             while (p == 0);
-            
+            Console.WriteLine();
             int[] mass = new int[1000]; //массив для генерируемых чисел
             int j = 0;
             for (int i=100; i < 10000; i++)  //подбор числа q
@@ -187,8 +188,8 @@ namespace Shnorr_open_keys
             BigInteger x=0;
             x = BigInteger.ModPow(g, r, p);
             Console.WriteLine($"x={x}");
-            int e = rnd.Next(0,Convert.ToInt32(Math.Pow(2, 20) - 1)); //2^t-1    t=20
-            int s = Convert.ToInt32((r + w * e) % q); //не конвертируетсяЫ
+            int e = rnd.Next(0, 1048576); //2^t-1    t=20
+            int s = (r + w * e) % q; //не конвертируетсяЫ
             BigInteger xx = 0;
             xx = (BigInteger.Pow(g, s) * BigInteger.Pow(y, Convert.ToInt32(e))) % p;
             Console.WriteLine($"xx={xx}");

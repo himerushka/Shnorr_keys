@@ -64,7 +64,7 @@ namespace Shnorr_open_keys
                 Console.WriteLine("Выберите Qj");
                 Console.Write("j:");
                 j = Convert.ToInt32(Console.ReadLine());
-                if (j > 0 && j <= size_mass)  //проверка введенного индекса по диапазону массива
+                if (j >= 0 && j <= size_mass)  //проверка введенного индекса по диапазону массива [0;size]
                 {
                     q = mass[j];        //если верно, присваиваем значение
                     Console.WriteLine($"q={q}");    //и выводим результат
@@ -103,7 +103,7 @@ namespace Shnorr_open_keys
                 Console.WriteLine("Выберите Gj");
                 Console.Write("j:");
                 j = Convert.ToInt32(Console.ReadLine());
-                if (j > 0 && j <= size_mass)
+                if (j >= 0 && j <= size_mass)
                 {
                     g = mass[j];
                     Console.WriteLine($"g={g}");
@@ -141,17 +141,19 @@ namespace Shnorr_open_keys
             while (w==0);
             
             Console.WriteLine();
-            BigInteger y=BigInteger.Pow(g,w);
+            BigInteger y=BigInteger.Pow(g,w);       //вводим открытый ключ у
+                    //на его место вычисляем коэффициент k=g^w
             j = 0;
-            for (int i = 100; i < 100000; i++)
+            for (int i = 10000; i < 100000; i++)
             {
                 //y = BigInteger.Remainder(y*i, p);
                 //Console.WriteLine("Вычисл. y=", y);
-                if (((y * i) % p) == 1)
+                if (((y * i) % p) == 1)     // if k*i mod p = 1, то заносим в массив
                 {
                     mass[j] = i;
                     Console.WriteLine($"Y{j}={mass[j]}");
                     j++;
+                    size_mass++;
                 }
             }
             Console.WriteLine();
@@ -162,21 +164,25 @@ namespace Shnorr_open_keys
                 Console.WriteLine("Выберите Yj");
                 Console.Write("j:");
                 j = Convert.ToInt32(Console.ReadLine());
-                if (j >= 0 && j < 150) //откуда ограничение (0;50)??
+                if (j >= 0 && j <= size_mass)                        //old:   //откуда ограничение (0;50)??
                 {
                     y = mass[j];
                     Console.WriteLine($"y={y}");
                 }
                 else
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
+                    //Console.ForegroundColor = ConsoleColor.Red;                   //добавить красный цвет для вывода ошибок?
                     Console.WriteLine("Неверный индекс. Повторите попытку ввода.");
-                    Console.ResetColor();
+                    //Console.ResetColor();
                     Console.WriteLine();
                     y = 0;
                 }
             }
             while (y == 0);
+
+            Array.Clear(mass, 0, size_mass); //очищаем массив
+            size_mass = 0;  //обнуляем кол-во эл-тов
+
             Console.WriteLine();
             Console.WriteLine("-------------------------------------------------------------");
             Console.ForegroundColor = ConsoleColor.Green;

@@ -22,8 +22,9 @@ namespace Shnorr_open_keys
         //уточнить диапазоны отсчета для циклов поиска
         static void Main(string[] args)
         {
-            int p = 0;
+            Console.SetWindowSize(70, 50);
             Console.WriteLine("-------------------------------------------------------------");
+            int p = 0;
             do
             {
                 Console.WriteLine("Введите простое число р в диапазоне (10 000; 100 000)");
@@ -62,7 +63,7 @@ namespace Shnorr_open_keys
             do
             {
                 Console.WriteLine("Выберите Qj");
-                Console.Write("j:");
+                Console.Write("j: ");
                 j = Convert.ToInt32(Console.ReadLine());
                 if (j >= 0 && j <= size_mass)  //проверка введенного индекса по диапазону массива [0;size]
                 {
@@ -101,7 +102,7 @@ namespace Shnorr_open_keys
             do
             {
                 Console.WriteLine("Выберите Gj");
-                Console.Write("j:");
+                Console.Write("j: ");
                 j = Convert.ToInt32(Console.ReadLine());
                 if (j >= 0 && j <= size_mass)
                 {
@@ -162,7 +163,7 @@ namespace Shnorr_open_keys
             do
             {
                 Console.WriteLine("Выберите Yj");
-                Console.Write("j:");
+                Console.Write("j: ");
                 j = Convert.ToInt32(Console.ReadLine());
                 if (j >= 0 && j <= size_mass)                        //old:   //откуда ограничение (0;50)??
                 {

@@ -43,62 +43,67 @@ namespace Shnorr_open_keys
                 }
             }
             while (p == 0);
+
             Console.WriteLine();
             int[] mass = new int[1000]; //массив для генерируемых чисел
-            int j = 0;
+            int j = 0, size_mass=0;     //переменная для вывода, кол-во элементов в массиве
             for (int i=100; i < 10000; i++)  //подбор числа q
             {
                 if (((p - 1) % i) ==0) {
                     mass[j] = i;
                     Console.WriteLine($"Q{j}={mass[j]}");
                     j++;
+                    size_mass++;    //считаем кол-во эл-тов массива
                     }
             }
             Console.WriteLine();
-            int q = 0;
+            j = 0;  //обнуляем используемый индекс
+            int q = 0;      //вводим открытый ключ q
             do
             {
                 Console.WriteLine("Выберите Qj");
                 Console.Write("j:");
-                q = Convert.ToInt32(Console.ReadLine());
-                if (q > 0 && q < 1000)  //проверка введенного числа по диапазону массива
+                j = Convert.ToInt32(Console.ReadLine());
+                if (j > 0 && j <= size_mass)  //проверка введенного индекса по диапазону массива
                 {
-                    q = mass[q];
-                    Console.WriteLine($"q={q}");
+                    q = mass[j];        //если верно, присваиваем значение
+                    Console.WriteLine($"q={q}");    //и выводим результат
                 }
                 else
-                {
-                    Console.WriteLine("Неверный индекс. Повторите попытку ввода.");
-                    Console.WriteLine();
+                {   //если введенный индекс меньше нуля или больше кол-ва эл-тов в массиве
+                    Console.WriteLine("Неверный индекс. Повторите попытку ввода."); 
+                    Console.WriteLine();    //повторяем попытку ввода
                     q = 0;
                 }
             }
-            while (q == 0);
+            while (q == 0); //повторяем, пока q = 0
 
-            Array.Clear(mass, 0, 1000);
+            Array.Clear(mass, 0, size_mass);     //очищаем массив
+            size_mass = 0;      //обнуляем кол-во элементов в массиве
             Console.WriteLine();
 
-            BigInteger g;
+            BigInteger g;   //вводим открытый ключ g
             j = 0;
-            for (int i = 15000; i < 25000; i++)     //поиск g
+            for (int i = 15000; i < 25000; i++)     //поиск g в диапазоне (15000;25000)
             {
-                g = BigInteger.ModPow(i, q, p);
-                if (g == 1)
+                g = BigInteger.ModPow(i, q, p);     //i^q mod p = 1
+                if (g == 1)     //если выполняется условие
                 {
-                    mass[j] = i;
+                    mass[j] = i;    //заносим в массив
                     Console.WriteLine($"G{j}={mass[j]}");
                     j++;
+                    size_mass++;
                 }
             }
             Console.WriteLine();
             
-            g = 0;
+            g = 0;      //обнуляем g после вычислений
             do
             {
                 Console.WriteLine("Выберите Gj");
                 Console.Write("j:");
                 j = Convert.ToInt32(Console.ReadLine());
-                if (j > 0 && j < 1000)
+                if (j > 0 && j <= size_mass)
                 {
                     g = mass[j];
                     Console.WriteLine($"g={g}");
@@ -112,10 +117,11 @@ namespace Shnorr_open_keys
             }
             while (g == 0);
 
-            Array.Clear(mass, 0, 1000);
+            Array.Clear(mass, 0, size_mass);
+            size_mass = 0;
 
             Console.WriteLine();
-            int w = 0;
+            int w = 0;      //вводим закрытый ключ w (пароль пользователя)
             do {
                 try
                 {

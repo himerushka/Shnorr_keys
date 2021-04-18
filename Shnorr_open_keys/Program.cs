@@ -199,12 +199,16 @@ namespace Shnorr_open_keys
             int r = rnd.Next(0, q);
             BigInteger x=0;
             x = BigInteger.ModPow(g, r, p);
-            Console.WriteLine($"x={x}");
+
+            //Console.WriteLine($"x={x}");
+
             int e = rnd.Next(0, 1048576); //2^t-1    t=20
             int s = (r + w * e) % q; //не конвертируетсяЫ
             BigInteger xx = 0;
-            xx = (BigInteger.Pow(g, s) * BigInteger.Pow(y, Convert.ToInt32(e))) % p;
-            Console.WriteLine($"xx={xx}");
+            xx = (BigInteger.Pow(g, s) * BigInteger.Pow(y, e)) % p;
+
+            //Console.WriteLine("xx=", xx);
+
             if (x == xx)
             {
                 Console.WriteLine("True");

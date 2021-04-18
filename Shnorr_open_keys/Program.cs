@@ -193,6 +193,7 @@ namespace Shnorr_open_keys
             Console.WriteLine($"Закрытый (пароль) = {w}");
             Console.WriteLine("-------------------------------------------------------------");
 
+            /*
             //аутентификация:
             //проверка работоспособности ключей
             Random rnd = new Random();
@@ -217,6 +218,7 @@ namespace Shnorr_open_keys
             {
                 Console.WriteLine("False");
             }
+            */
             //ожидание нажатия любой клавиши
             Console.ReadKey();
         }

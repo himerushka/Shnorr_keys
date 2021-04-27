@@ -18,8 +18,7 @@ namespace Shnorr_open_keys
             }
             return true;
         }
-        //ввести размерность для массива
-        //уточнить диапазоны отсчета для циклов поиска
+
         static void Main(string[] args)
         {
             Console.SetWindowSize(70, 50);
